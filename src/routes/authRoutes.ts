@@ -1,10 +1,8 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import { loginController } from "../controllers/auth/loginController";
 
 const router = Router();
 
-router.get("/login", (req: Request, res: Response) => {
-  console.log("req.path:", req.path);
-  res.json({ status: "test" });
-});
+router.get("/login", loginController);
 
 export default router;
