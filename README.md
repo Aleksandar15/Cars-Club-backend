@@ -23,7 +23,7 @@
 - Run `npm install` in your command line.
 - Run `npm run dev` in your command line (_or modify your own scripts inside `package.json`_).
   - The concurrently package is used to automatically "_watch_" for `.ts` file changes (_inside `src` as specified in `tsconfig.json`_) and compile on save.
-    - I have also added command for `ts-node` which _runs `.ts` file without compiling it to `.js` first_, but it is so much slower than the `concurrently` command, so I don't recommend 'ts-node'.
+    - I have also added `npm run devNoOnSaveCompile` command for `ts-node` which _runs `.ts` file without compiling it to `.js` first_, but it is so much slower than the `concurrently` command, so I don't recommend 'ts-node'.
 - Visit http://localhost:3000 in your browser.
   - That's if you use Vite (_V4 specifically_) like I do on my <a href="https://github.com/Aleksandar15/Cars-Club-frontend">frontend</a> which runs on PORT 5173 by default.
 - For the full functionality connect it with my <a href="https://github.com/Aleksandar15/Cars-Club-frontend">frontend</a> project.
