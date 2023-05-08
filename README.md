@@ -36,3 +36,7 @@
 ##### Sources
 
 - For most of my SVG icons I've used a PNG version of icons8 and then converted that PNG into SVG using sites like https://www.pngtosvg.com.
+
+##### Extras (_reminders for me_)
+
+1. I've updated `users`' table's column `refresh_tokens` array to instead be a separate table `refresh_tokens` which has a _one to many_ relationship with `users` table (_multiple 'refresh tokens' can belong to a single user_) referencing a `FOREIGN KEY` of `user_id` with `ON DELETE CASCADE` constraint ensuring if a user deletes their account then all of their "refresh_token"'s rows would be removed with that action.
