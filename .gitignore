@@ -6,6 +6,7 @@ build
 
 # misc
 .env 
+# env.d.ts // be public, it only specifies types
 .DS_Store
 .env.local
 .env.development.local
