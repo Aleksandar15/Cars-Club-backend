@@ -4,17 +4,12 @@ import { Request, Response } from "express";
 
 const registerController = async (req: Request, res: Response) => {
   try {
-    console.log("req.body:", req.body);
-    console.log("req.params REGISTER:", req.params);
-    console.log("req.query REGISTER:", req.query);
-    console.log("req.query REGISTER:", req.query.paramKey);
     const { name, email, password } = req.body;
 
     const findUserByEmail = await database.query(
       "SELECT user_email FROM users WHERE user_email=$1",
       [email]
     );
-    console.log("register findUserByEmail.rows:", findUserByEmail.rows);
 
     // Check if user by e-mail is already registered
     if (findUserByEmail.rows.length) {
@@ -36,8 +31,11 @@ const registerController = async (req: Request, res: Response) => {
       VALUES ($1, $2, $3) RETURNING user_name, user_email`,
       [name, email, hashedPassword]
     );
-    console.log("createNewUser.rows[0]:", createNewUser.rows[0]);
-    res.json({ isSuccessful: true, user_info: createNewUser.rows[0] });
+    return res.json({
+      isSuccessful: true,
+      user_info: createNewUser.rows[0],
+      message: "User registered successfully",
+    });
   } catch (err) {
     if (err instanceof Error) {
       console.log("err.message registerController:", err.message);
