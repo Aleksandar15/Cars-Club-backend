@@ -12,6 +12,9 @@ const app: Application = express();
 // CORS configurations
 app.use(cors());
 
+// Parse JSON and populate req.body with the parsed data
+app.use(express.json());
+
 // In case process.env.PORT is undefined use 3000
 const PORT: number = Number(process.env.PORT ?? 3000);
 
