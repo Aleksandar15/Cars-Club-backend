@@ -1,6 +1,11 @@
 import express, { Application, Request, Response } from "express";
 import authRoutes from "./routes/authRoutes";
 import cors from "cors";
+import dotenv from "dotenv";
+
+// Call dotenv.config() once to make it available across all files
+dotenv.config();
+// import "dotenv/config"; // alternatively - works as well
 
 const app: Application = express();
 
