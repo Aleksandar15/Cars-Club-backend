@@ -13,7 +13,9 @@ const validAuthInfo = (req: Request, res: Response, next: NextFunction) => {
       return res
         .status(422)
         .json({ isSuccessful: false, message: "Missing Credentials" });
-    } else if (!validEmail(email)) {
+      // these 'as string' are more useful if 'userEmail: any'
+      // in this case it's not necessary when argument type is ':string'
+    } else if (!validEmail(email as string)) {
       return res
         .status(422)
         .json({ isSuccessful: false, message: "Invalid Email" });
@@ -23,7 +25,7 @@ const validAuthInfo = (req: Request, res: Response, next: NextFunction) => {
       return res
         .status(422)
         .json({ isSuccessful: false, message: "Missing Credentials" });
-    } else if (!validEmail(email)) {
+    } else if (!validEmail(email as string)) {
       return res
         .status(422)
         .json({ isSuccessful: false, message: "Invalid Email" });
