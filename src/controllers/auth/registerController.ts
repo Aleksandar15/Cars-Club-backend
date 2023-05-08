@@ -31,7 +31,7 @@ const registerController = async (req: Request, res: Response) => {
       VALUES ($1, $2, $3) RETURNING user_name, user_email`,
       [name, email, hashedPassword]
     );
-    return res.json({
+    return res.status(200).json({
       isSuccessful: true,
       user_info: createNewUser.rows[0],
       message: "User registered successfully",
