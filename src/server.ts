@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import authRoutes from "./routes/authRoutes";
 import cors from "cors";
 import dotenv from "dotenv";
+import corsOptions from "./config/corsOptions";
 
 // Call dotenv.config() once to make it available across all files
 dotenv.config();
@@ -10,7 +11,7 @@ dotenv.config();
 const app: Application = express();
 
 // CORS configurations
-app.use(cors());
+app.use(cors(corsOptions as cors.CorsOptions));
 
 // Parse JSON and populate req.body with the parsed data
 app.use(express.json());
