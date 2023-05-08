@@ -9,15 +9,24 @@ const validAuthInfo = (req: Request, res: Response, next: NextFunction) => {
 
   if (req.path === "/register") {
     if (![email, name, password].every(Boolean)) {
-      return res.status(401).json("Missing Credentials");
+      // 422 - Unprocessable Entity
+      return res
+        .status(422)
+        .json({ isSuccessful: false, message: "Missing Credentials" });
     } else if (!validEmail(email)) {
-      return res.status(401).json("Invalid Email");
+      return res
+        .status(422)
+        .json({ isSuccessful: false, message: "Invalid Email" });
     }
   } else if (req.path === "/login") {
     if (![email, password].every(Boolean)) {
-      return res.status(401).json("Missing Credentials");
+      return res
+        .status(422)
+        .json({ isSuccessful: false, message: "Missing Credentials" });
     } else if (!validEmail(email)) {
-      return res.status(401).json("Invalid Email");
+      return res
+        .status(422)
+        .json({ isSuccessful: false, message: "Invalid Email" });
     }
   }
 
