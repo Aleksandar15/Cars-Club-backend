@@ -33,6 +33,11 @@
 - If you want to deploy the frontend part on Netlify you should copy the code included in my Frontend's <a href="https://github.com/Aleksandar15/Cars-Club-frontend/blob/main/netlify.toml">netlify.toml</a> file.
 - To deploy the backend you can use alternatives to Heroku: <a href="https://render.com">https://render.com</a> or <a href="https://fly.io/docs/apps/deploy">https://fly.io/docs/apps/deploy</a> (_but fly.io limits to 1 free app per credit card_).
 
+##### More informations
+
+1. I have this `getCookieOptions` function you can use for most default "_cookieOptions_" properties or otherwise set up your own as these are not limitations.
+   - Warning is if you deploy your app, there it might not have a `NODE_ENV` environment variable so you must specify it to `'production'` (if it's not already by default; otherwise it'd use the `'development'` options) and also you'd need to modify that function to include a `domain` property (which is currently commented out) value of URL.
+
 ##### Sources
 
 - For most of my SVG icons I've used a PNG version of icons8 and then converted that PNG into SVG using sites like https://www.pngtosvg.com.
