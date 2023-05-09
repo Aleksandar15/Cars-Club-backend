@@ -1,6 +1,6 @@
 import jwt, { Secret } from "jsonwebtoken";
 
-interface PayloadObject {
+export interface PayloadObject {
   user_id: string;
   user_role: string;
 }
@@ -23,23 +23,23 @@ export const jwtGenerator = (
   //     Please provide a valid duration
   //     (e.g., '1d', '2h', '30m', '1y').`
   //   );
-  // }   // decided not to use.
+  // }   // -> decided not to use.
 
   // Fixing TypeScript: "No overload matches this call."
-  // Works even as 'secret | undefined',
-  // but if-condition type guard is a must
-  const jwtSecret: Secret | undefined = process.env.jwtSecret;
+  // Below works even as 'string | undefined',
+  const jwtSecret: Secret | undefined = process.env.ACCESS_TOKEN_SECRET;
+  // But, if-conditional type guard is optional
   if (!jwtSecret) {
     throw new Error("JWT secret not found in environment variables.");
   }
 
-  // return jwt.sign(payload, process.env.jwtSecret, { expiresIn });
+  // return jwt.sign(payload, process.env.jwtSecret, { expiresIn }); // error
   return jwt.sign(payload, jwtSecret, { expiresIn });
 };
 
-// Create a separate JWT generator
+// Create a separate refreshToken JWT generator
 // for the purpose of using different secret key.
-
+// I could do this in a single function, but I prefer this way.
 export const jwtRefreshGenerator = (
   user_id: string,
   user_role: string,
@@ -50,7 +50,7 @@ export const jwtRefreshGenerator = (
     user_role,
   };
 
-  const jwtRefreshSecret: Secret | undefined = process.env.jwtRefreshSecret;
+  const jwtRefreshSecret: Secret | undefined = process.env.REFRESH_TOKEN_SECRET;
   if (!jwtRefreshSecret) {
     throw new Error("JWT secret not found in environment variables.");
   }
