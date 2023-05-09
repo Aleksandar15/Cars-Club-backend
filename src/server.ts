@@ -1,10 +1,12 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
 import authRoutes from "./routes/authRoutes";
 import cors from "cors";
 import dotenv from "dotenv";
 import corsOptions from "./config/corsOptions";
+import cookiePaser from "cookie-parser";
 
-// Call dotenv.config() once to make it available across all files
+// Call dotenv.config() once
+// to make it available across all files
 dotenv.config();
 // import "dotenv/config"; // alternatively - works as well
 
@@ -15,6 +17,9 @@ app.use(cors(corsOptions as cors.CorsOptions));
 
 // Parse JSON and populate req.body with the parsed data
 app.use(express.json());
+
+// Extract cookie data, parse, adds them to req.cookies
+app.use(cookiePaser());
 
 // In case process.env.PORT is undefined use 3000
 const PORT: number = Number(process.env.PORT ?? 3000);
