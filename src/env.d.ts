@@ -7,5 +7,6 @@ declare namespace NodeJS {
     PGHOST: string;
     PGPROXYPORT: number;
     PGDATABASE: string;
+    NODE_ENV?: "development" | "production";
   }
 }
