@@ -82,7 +82,7 @@ const loginController = async (req: Request, res: Response) => {
       // Grab payload no matter its expiration
       const payload: PayloadObject = JWT.verify(
         refreshToken,
-        process.env.ACCESS_TOKEN_SECRET,
+        process.env.REFRESH_TOKEN_SECRET,
         {
           ignoreExpiration: true,
         }
@@ -129,13 +129,8 @@ const loginController = async (req: Request, res: Response) => {
          VALUES ($1, $2) RETURNING refresh_token`,
         [foundUserByEmail.rows[0].user_id, newRefreshToken]
       );
-      console.log(
-        "insertedNewRefresh[0].rows:\n",
-        insertNewRefreshToken.rows[0]
-      );
     }
     // Also send the refreshToken cookie in the response
-    console.log("cookies.options.secure:", cookieOptions?.secure);
     res.cookie("refreshToken", newRefreshToken, {
       maxAge: cookieOptions?.maxAge,
       httpOnly: cookieOptions?.httpOnly,
