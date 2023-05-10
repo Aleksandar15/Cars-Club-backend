@@ -1,6 +1,6 @@
 import database from "../../database";
 import { Request, Response } from "express";
-import JWT, { DecodeOptions, JwtPayload, VerifyErrors } from "jsonwebtoken";
+import JWT, { VerifyErrors } from "jsonwebtoken";
 import {
   jwtRefreshGenerator,
   jwtGenerator,
@@ -8,6 +8,30 @@ import {
   DecodedObject,
 } from "../../utils/jwtGenerators";
 import getCookieOptions from "../../libs/getCookieOptions";
+
+// Warning/NOTE:
+// On the frontend, let's say React, I must use a state of "flag"
+// in-between the /refreshtoken ENDPOINT request, because
+// it serves a purpose for the slow-internet users, without it
+// if they made a rapid fast requests before response is received
+// they'll have a failed response on the 2nd (or 3rd, etc.) request
+// because this RT controller will read the same "refreshToken"
+// cookie twice -> and will 'think' the 2nd request was an attempt
+// to re-use token, since I don't like the #1st Fix: a queue and
+// flag on the backend: which would mean I keep the refreshToken in a
+// cache for a little while & allow re-use for a brief period of time
+// for the sake of slow-internet users & thus breaking my rules of
+// 1 refreshToken = 1 request; and making my server a little bit less
+// secure: by openning a window for a fast enough hacker to re-use
+// the token on behalf of the victimized user, I don't wanted to
+// make such a sacrifice so instead leave the backend as-is: if
+// slow-internet conneciton user rapidly fires 2 requests very fast
+// the 2nd would fail -> HOWEVER that's where fix #2 comes with the
+// React's "flag" state: which would be set to 'true' (boolean) &
+// when request is made the setFlag(false) would be called & once
+// response has arrived ONLY then I'll setFlag(true) again & thus
+// allowing for further request ONLY AFTER the previous response has
+// arrived.
 
 const refreshTokenController = async (req: Request, res: Response) => {
   try {
@@ -43,6 +67,8 @@ const refreshTokenController = async (req: Request, res: Response) => {
       [payload.user_id, refreshToken]
     );
 
+    // REUSE Detection Attempt ~ START
+    // Logic:
     // If refresh_token is not found in the database
     // has anyone used the token on behalf of the user (a hacker)?
     // Or is it just someone else logged in the same account on
@@ -51,7 +77,7 @@ const refreshTokenController = async (req: Request, res: Response) => {
     if (refreshTokenFoundInDatabase.rows.length === 0) {
       // REUSE Detection attempt (by a hacker?):
 
-      // then remove all of their refresh_token's from Database
+      // Then remove all of their refresh_token's from Database
       const deleteAllRTsFromDatabase = await database.query(
         `
       DELETE FROM refresh_tokens WHERE user_id=$1
@@ -64,7 +90,8 @@ const refreshTokenController = async (req: Request, res: Response) => {
         message: "Error - detected refresh token reuse attempt",
       });
     }
-    // Not found refresh_token CASE ENDS.
+    // Otherwise,
+    // No attempt was made to reuse refresh_token.
 
     // Continue the process
     // Goal: deliver new refreshToken + accessToken
@@ -128,8 +155,8 @@ const refreshTokenController = async (req: Request, res: Response) => {
           RETURNING user_id, refresh_token
           `,
           // NOTE
-          // SET newRefreshToken
-          // WHERE clause: 'old & used refreshToken'
+          // SET refresh_token=newRefreshToken
+          // WHERE clause: refresh_token=('old & used') refreshToken
           [newRefreshToken, (decoded as DecodedObject).user_id, refreshToken]
         );
 
