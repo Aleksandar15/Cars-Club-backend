@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 
 const registerController = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     const findUserByEmail = await database.query(
       "SELECT user_email FROM users WHERE user_email=$1",
@@ -29,7 +29,7 @@ const registerController = async (req: Request, res: Response) => {
     const createNewUser = await database.query(
       `INSERT INTO users (user_name, user_email, user_password) 
       VALUES ($1, $2, $3) RETURNING user_name, user_email`,
-      [name, email, hashedPassword]
+      [username, email, hashedPassword]
     );
     return res.status(200).json({
       isSuccessful: true,
