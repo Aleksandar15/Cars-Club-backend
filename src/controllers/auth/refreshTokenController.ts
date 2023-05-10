@@ -37,7 +37,6 @@ const refreshTokenController = async (req: Request, res: Response) => {
   try {
     const cookies = req.cookies;
     const cookieOptions = getCookieOptions();
-    console.log("cookies?.refreshToken:", cookies?.refreshToken);
 
     // If refreshToken doesn't exist immediately respond
     if (!cookies?.refreshToken) {
