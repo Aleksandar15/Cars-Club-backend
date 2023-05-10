@@ -1,10 +1,5 @@
 import jwt, { Secret } from "jsonwebtoken";
 
-export interface PayloadObject {
-  user_id: string;
-  user_role: string;
-}
-
 export const jwtGenerator = (
   user_id: string,
   user_role: string,
@@ -57,3 +52,15 @@ export const jwtRefreshGenerator = (
 
   return jwt.sign(payload, jwtRefreshSecret, { expiresIn });
 };
+
+export interface PayloadObject {
+  user_id: string;
+  user_role: string;
+}
+
+export interface DecodedObject {
+  user_id: string;
+  user_role: string;
+  iat: number;
+  exp: number;
+}
