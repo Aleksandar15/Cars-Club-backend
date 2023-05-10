@@ -151,7 +151,9 @@ const refreshTokenController = async (req: Request, res: Response) => {
   } catch (err) {
     if (err instanceof Error) {
       console.log("err.message in refreshTokenController:", err.message);
-      return res.status(500).send("Failed to respond");
+      return res
+        .status(500)
+        .json({ isSuccessful: false, message: "Server error" });
     } else {
       console.log("Unexpected error refreshToken:", (err as Error).message);
     }
