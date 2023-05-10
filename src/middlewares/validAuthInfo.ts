@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 
 const validAuthInfo = (req: Request, res: Response, next: NextFunction) => {
-  const { email, name, password } = req.body;
+  const { email, username, password } = req.body;
 
   function validEmail(userEmail: string) {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail);
   }
 
   if (req.path === "/register") {
-    if (![email, name, password].every(Boolean)) {
+    if (![email, username, password].every(Boolean)) {
       // 422 - Unprocessable Entity
       return res
         .status(422)
