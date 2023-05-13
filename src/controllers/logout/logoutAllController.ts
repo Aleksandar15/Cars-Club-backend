@@ -10,7 +10,7 @@ const logoutAllController: RequestHandler = async (req, res) => {
 
     // Check if user misses refreshToken cookie
     if (!cookies?.refreshToken) {
-      return res.status(401).json({
+      return res.status(400).json({
         isSuccessful: false,
         message: "Failed to logout - missing refreshToken cookie",
       });
@@ -39,7 +39,7 @@ const logoutAllController: RequestHandler = async (req, res) => {
     // User has used "logoutAll" feature on some other device
     // and now their refreshToken doesn't exist in Database
     if (removeAllRefreshTokens.rows.length === 0) {
-      return res.status(400).json({
+      return res.status(401).json({
         isSuccessful: false,
         message: "Failed to logout - user already logged out",
       });
