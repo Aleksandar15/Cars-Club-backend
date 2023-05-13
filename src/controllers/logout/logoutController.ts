@@ -42,6 +42,12 @@ const logoutController: RequestHandler = async (req, res) => {
     // User has used "logoutAll" feature on some other device
     // and now their refreshToken doesn't exist in Database
     if (removedRefreshToken.rows.length === 0) {
+      // In this case: frontend should send empathetic message
+      // to the user to make sure it's their trusted-user-list
+      // that used 'logoutAllSessions' & if not -> it could be
+      // a hacker that has used the refreshToken & the
+      // refreshTokenController has deleted it out of Database
+      res.clearCookie("refreshToken", getCookieOptions());
       return res.status(401).json({
         isSuccessful: false,
         message: "Failed to logout - user already logged out",
