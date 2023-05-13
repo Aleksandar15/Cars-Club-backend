@@ -22,6 +22,7 @@ const verifyRefreshToken: RequestHandler = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET as string,
       async (err, decoded) => {
         if (err) {
+          res.clearCookie("refreshToken");
           return res.status(403).json({
             isSuccessful: false,
             message: "Error - refreshToken has expired",
