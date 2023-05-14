@@ -47,25 +47,24 @@
 1. I've updated `users`' table's column `refresh_tokens` array to instead be a separate table `refresh_tokens` which has a _one to many_ relationship with `users` table (_multiple 'refresh tokens' can belong to a single user_) referencing a `FOREIGN KEY` of `user_id` with `ON DELETE CASCADE` constraint ensuring if a user deletes their account then all of their "refresh_token"'s rows would be removed with that action.
 
 2. NOTES about `refreshTokenController.ts` (or rather a _warning_):
-   - On the frontend, let's say in React, I must use a state of `flag`
-     in-between the /refreshtoken ENDPOINT requests, because
+   - On the frontend, in my React app, I **_must_** use a state of `flag` (_update_: or rather the `'loading'`Redux Toolkit state)
+     in-between the `/refreshtoken` endpoint HTTP (Axios interceptors) requests, because
      it serves a purpose for the slow-internet users, whereas: without it
      if they made a rapid fast requests before response is received
      they'll have a failed response on the 2nd (or 3rd, etc.) request
      because this `refreshTokenController` will read the same `refreshToken`
      cookie twice -> and will 'think' the 2nd request was an attempt
      to re-use token, since I don't like the #1st Fix: a queue and
-     flag (or use a caching library like `node-cache`) on the backend: which would mean I keep the `refreshToken` in a
+     flag on the backend (or use a caching library like `node-cache`): which would mean I keep the `refreshToken` in a
      cache for a little while & allow re-use for a brief period of time
      for the sake of slow-internet users & thus breaking my rules of
      1 refreshToken = 1 request; and further making my server a little bit less
      secure: by openning a window for a fast enough hacker to re-use
-     the token on behalf of the victimized user. I don't wanted to
-     make such a sacrifice so instead leave the backend's `refreshTokenController` as-is: if
+     the token on behalf of the victimized user without getting caught in my "detect refreshToken reuse" logic. I don't wanted to
+     make such a sacrifice so instead leave the backend's `refreshTokenController` logic as-is: if
      slow-internet conneciton user rapidly fires 2 requests very fast
-     the 2nd would fail -> HOWEVER that's where fix #2 comes with the
-     React's `flag` state: which would be set to `true` (boolean) initially &
-     when request is made the `setFlag(false)` would be called & once
+     the 2nd would fail -> HOWEVER that's where the fix #2 comes with the
+     `flag` state on the frontend side in React: which would be set to `true` (boolean) initially & just before the request is made then the `setFlag(false)` would be called & once
      response has arrived ONLY then I'll `setFlag(true)` again & thus
      allowing for further request ONLY AFTER the previous response has
      arrived, in similar fashion to what `useEffect` does with its cleanup function when making GET HTTP requests.

@@ -51,19 +51,11 @@ const refreshTokenController = async (req: Request, res: Response) => {
     res.clearCookie("refreshToken", getCookieOptions());
     // Grab refreshToken
     const refreshToken: string = cookies.refreshToken as string;
-    // Grab payload no matter its expiration
-    const payload: PayloadObject = JWT.verify(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
-      {
-        ignoreExpiration: true,
-      }
-    ) as PayloadObject;
 
     const refreshTokenFoundInDatabase = await database.query(
       `SELECT refresh_token FROM refresh_tokens
-       WHERE user_id=$1 AND refresh_token=$2`,
-      [payload.user_id, refreshToken]
+       WHERE refresh_token=$1`,
+      [refreshToken]
     );
 
     // REUSE Detection Attempt ~ START
@@ -74,6 +66,15 @@ const refreshTokenController = async (req: Request, res: Response) => {
     // different device clicking "logoutallsessions" in meantime?
     // Make sure to warn the user for both cases & log them:
     if (refreshTokenFoundInDatabase.rows.length === 0) {
+      // Grab payload no matter its expiration
+      const payload: PayloadObject = JWT.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+          ignoreExpiration: true,
+        }
+      ) as PayloadObject;
+
       // REUSE Detection attempt (by a hacker?):
 
       // Then remove all of their refresh_token's from Database
@@ -107,10 +108,9 @@ const refreshTokenController = async (req: Request, res: Response) => {
           const removeReceivedRTfromDatabase = await database.query(
             `
             DELETE FROM refresh_tokens 
-            WHERE user_id=$1 
-            AND refresh_token=$2
+            WHERE refresh_token=$1
             `,
-            [payload.user_id, refreshToken]
+            [refreshToken]
           );
           return res.status(401).json({
             isSuccessful: false,
