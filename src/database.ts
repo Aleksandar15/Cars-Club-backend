@@ -11,13 +11,24 @@ import { Pool } from "pg";
 //   console.log(".PGUSER database.ts inside setTimeout:", process.env.PGUSER);
 // }, 0); // logs correct value
 
-const pool = new Pool({
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  host: process.env.PGHOST,
-  port: process.env.PGPROXYPORT,
-  database: process.env.PGDATABASE,
-});
+// UPDATES FOR Render.com deployment
+let pool;
+
+if (process.env.NODE_ENV === "production") {
+  // Connection string for deployed environment
+  pool = new Pool({
+    connectionString: process.env.CONNECTION_STRING_POSTGRESQL,
+  });
+} else {
+  // Connection placeholders for local development environment
+  pool = new Pool({
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    host: process.env.PGHOST,
+    port: process.env.PGPROXYPORT,
+    database: process.env.PGDATABASE,
+  });
+}
 
 // console.log("pool", pool);
 
