@@ -12,7 +12,7 @@ import { Pool } from "pg";
 // }, 0); // logs correct value
 
 // UPDATES FOR Render.com deployment
-let pool;
+let pool: Pool;
 
 if (process.env.NODE_ENV === "production") {
   // Connection string for deployed environment
