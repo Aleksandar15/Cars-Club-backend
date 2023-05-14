@@ -8,5 +8,6 @@ declare namespace NodeJS {
     PGPROXYPORT: number;
     PGDATABASE: string;
     NODE_ENV?: "development" | "production";
+    CONNECTION_STRING_POSTGRESQL: string;
   }
 }
