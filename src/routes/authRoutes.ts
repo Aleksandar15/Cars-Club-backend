@@ -6,6 +6,7 @@ import validAuthInfo from "../middlewares/validAuthInfo";
 import logoutController from "../controllers/logout/logoutController";
 import logoutAllController from "../controllers/logout/logoutAllController";
 import verifyRefreshToken from "../controllers/auth/verifyRefreshToken";
+import setNoCacheHeaders from "../middlewares/setNoCacheHeaders";
 
 const router = Router();
 
@@ -19,6 +20,7 @@ router.delete("/logoutallsessions", logoutAllController);
 
 router.get("/refreshtoken", refreshtokenController);
 
+// router.get("/verifyrefreshtoken", setNoCacheHeaders, verifyRefreshToken);
 router.get("/verifyrefreshtoken", verifyRefreshToken);
 
 export default router;
