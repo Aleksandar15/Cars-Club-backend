@@ -1,6 +1,6 @@
 import { Router } from "express";
 import createPostController from "../controllers/posts/createPostController";
-import getImageByIdController from "../controllers/posts/getImageById";
+import getImageByIdController from "../controllers/posts/getImageByIdController";
 import authorizeJWT from "../middlewares/authorizeJWT";
 import multerMiddleware from "../middlewares/multerMiddleware";
 
