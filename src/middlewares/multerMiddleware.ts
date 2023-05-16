@@ -1,6 +1,9 @@
 import { RequestHandler } from "express";
 import multer from "multer";
 
+// NOTE this setup works for only for a single image as
+// the upload.single() below code suggests.
+
 const multerMiddleware: RequestHandler = async (req, res, next) => {
   try {
     const storage = multer.memoryStorage();
