@@ -48,22 +48,11 @@ const authorizeJWT: RequestHandler = async (
         }
       );
     }
-    // next(); // BUG: calls next even on fails responses even though
-    // // I have return statements on every response (hm?)
+    // next(); // BUG1: calls next even on fails responses even
+    // // though I have return statements on every response (hm?)
     // // and issue was: postRoute's weren't able to send response
     // // because 'headers already sent' (from authorzieJWT)...
     // // Whatever.., moving it inside JWT.verify's success fixed it.
-
-    // UPDATE2 Notes: below issue fixed by adding condition of
-    // "|| authHeader === undefined" to the Type guards above
-    // as much as Typescript can help, it can also make you run into
-    // unexpected bugs which you must debug yourself for hours.
-    // Anyways bug2 fixed: normal (non-intercepting) axios instances
-    // can NO longer bypass authorizeJWT & nor run into authorizeJWT's
-    // hanging response bug3 -> which came up by fixing bug1 (moving
-    // next() inside JWT's decoded case) -> and bug3 got auto-fixed
-    // by fixing bug2:
-    // I'm also checking if authHeader===undefined as well.
 
     // NOTE: I suspected the issue was my axiosInterceptor's setup,
     // but I tested on the frontend using normal axios instance
@@ -77,6 +66,17 @@ const authorizeJWT: RequestHandler = async (
     // bypasses it and goes straight into my /createpost endpoint's
     // logic BUT req.user_id is undefined -> I might have to look
     // it up as to why.
+
+    // NOTE2/UPDATE2: below issue fixed by adding condition of
+    // "|| authHeader === undefined" to the Type guards above
+    // as much as Typescript can help, it can also make you run into
+    // unexpected bugs which you must debug yourself for hours.
+    // Anyways bug2 fixed: normal (non-intercepting) axios instances
+    // can NO longer bypass authorizeJWT & nor run into authorizeJWT's
+    // hanging response bug3 -> which came up by fixing bug1 (moving
+    // next() inside JWT's decoded case) -> and bug3 got auto-fixed
+    // by fixing bug2:
+    // I'm also checking if authHeader===undefined as well.
   } catch (err) {
     res.status(500).json({ isSuccessful: false, message: "Server error" });
   }
