@@ -17,7 +17,7 @@ const authorizeJWT: RequestHandler = async (
     // Grab authHeader even if header is capitalized
     const authHeader = req.headers.authorization || req.headers.Authorization;
     // authHeader guards - because it can be a String or Array of Strings
-    if (typeof authHeader === "string") {
+    if (typeof authHeader === "string" || authHeader === undefined) {
       // Check if it's correctly formed: starting with 'Bearer '
       if (!authHeader?.startsWith("Bearer "))
         return res.status(401).json({
@@ -53,6 +53,17 @@ const authorizeJWT: RequestHandler = async (
     // // and issue was: postRoute's weren't able to send response
     // // because 'headers already sent' (from authorzieJWT)...
     // // Whatever.., moving it inside JWT.verify's success fixed it.
+
+    // UPDATE2 Notes: below issue fixed by adding condition of
+    // "|| authHeader === undefined" to the Type guards above
+    // as much as Typescript can help, it can also make you run into
+    // unexpected bugs which you must debug yourself for hours.
+    // Anyways bug2 fixed: normal (non-intercepting) axios instances
+    // can NO longer bypass authorizeJWT & nor run into authorizeJWT's
+    // hanging response bug3 -> which came up by fixing bug1 (moving
+    // next() inside JWT's decoded case) -> and bug3 got auto-fixed
+    // by fixing bug2:
+    // I'm also checking if authHeader===undefined as well.
 
     // NOTE: I suspected the issue was my axiosInterceptor's setup,
     // but I tested on the frontend using normal axios instance
