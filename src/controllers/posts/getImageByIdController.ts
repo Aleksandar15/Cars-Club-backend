@@ -19,12 +19,13 @@ const getImageByIdController: RequestHandler<{ id: string }> = async (
     // headers are NOT needed
     // res.setHeader(
     //   "Content-Disposition",
-    //   `attachment; filename="${"mercedes.jpg"}"`
+    //   `attachment; filename="${"mercedes.jpg"}"` // tests hardcoded
     // );
 
-    //
-    // // return res.status(200).json({ base64Image });
-    //
+    // // Below works but I'll have to use the imgSrc myself in React.
+    // return res.status(200).json({ base64Image });
+
+    // Instead pass the finished SRC's value
     const imageSrc = `data:image/jpeg;base64,${base64Image}`;
     return res.status(200).json({ imageSrc });
   } catch (err) {
