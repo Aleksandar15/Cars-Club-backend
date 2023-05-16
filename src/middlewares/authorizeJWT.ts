@@ -44,10 +44,28 @@ const authorizeJWT: RequestHandler = async (
 
           req.user_id = decodedTyped.user_id;
           req.user_role = decodedTyped.user_role;
+          next();
         }
       );
     }
-    next();
+    // next(); // BUG: calls next even on fails responses even though
+    // // I have return statements on every response (hm?)
+    // // and issue was: postRoute's weren't able to send response
+    // // because 'headers already sent' (from authorzieJWT)...
+    // // Whatever.., moving it inside JWT.verify's success fixed it.
+
+    // NOTE: I suspected the issue was my axiosInterceptor's setup,
+    // but I tested on the frontend using normal axios instance
+    // (non-intercepted) and that one was successfully hitting my
+    // /api/v1/post/createpost endpoint -> so it seems like this
+    // authorizeJWT's next() call's sticks in the intercepted
+    // response and hence why my /createpost couldn't receive
+    // the req.user_id (was being undefined) & 'headers already set'
+    // error occured, which means I might need to look up as to why
+    // the normal axios doesn't call this authorizeJWT? But instead
+    // bypasses it and goes straight into my /createpost endpoint's
+    // logic BUT req.user_id is undefined -> I might have to look
+    // it up as to why.
   } catch (err) {
     res.status(500).json({ isSuccessful: false, message: "Server error" });
   }
