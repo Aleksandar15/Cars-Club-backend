@@ -18,6 +18,10 @@ const multerMiddleware: RequestHandler = async (req, res, next) => {
 
       // const file = req.file;
 
+      // NOTE I don't need to manually add req.file because
+      // multer does it for me, so unlike authorizeJWT,
+      // no need to assign req.file a value.
+
       console.log("req.file multerMiddleware33333:", req.file);
       // // console.log("req.user_id createPostControler:", req?.user_id);
       // return res.status(200).json({ isSuccessful: true, message: "Received" });
