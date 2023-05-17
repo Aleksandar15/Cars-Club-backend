@@ -28,6 +28,7 @@ CREATE TABLE posts (
   post_description VARCHAR(1000) NOT NULL,
   post_contact_number VARCHAR(20) CHECK (post_contact_number ~ '^\d{1,20}$') NOT NULL,
   post_asking_price VARCHAR(20) CHECK (post_asking_price ~ '^\d{1,20}$') NOT NULL,
+  post_asking_price_currency VARCHAR(5) NOT NULL,
   post_created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   user_id UUID,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
