@@ -35,4 +35,6 @@ INSERT INTO users (user_name, user_email, user_password) VALUES ('test', 'test@t
 INSERT INTO refresh_tokens (user_id, refresh_token) VALUES ('change-this-into-real-uuid', 'abc123');
 
 -- REMINDERS to-be/can-be used
--- DELETE FROM posts WHERE id >= 3 AND id <= 5; -- Deleting ROWS by selecting ranges
+-- DELETE FROM posts WHERE id >= 3 AND id <= 5; -- Deleting ROWS by selecting ranges.
+DELETE FROM posts WHERE id IN (1, 3, 5) -- Deleting a specific ROWS by id's; 
+-- -- IN opprator to specify multiple values in a WHERE clause; without having to use multi-OR's.
