@@ -33,3 +33,6 @@ CREATE TABLE refresh_tokens (
 INSERT INTO users (user_name, user_email, user_password) VALUES ('test', 'test@test.com', 'password');
 -- Create test refresh_token:
 INSERT INTO refresh_tokens (user_id, refresh_token) VALUES ('change-this-into-real-uuid', 'abc123');
+
+-- REMINDERS to-be/can-be used
+-- DELETE FROM posts WHERE id >= 3 AND id <= 5; -- Deleting ROWS by selecting ranges
