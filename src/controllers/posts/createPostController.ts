@@ -1,11 +1,11 @@
 import { RequestHandler } from "express";
-import multer from "multer";
 import database from "../../database";
 
 const createPostController: RequestHandler = async (req, res) => {
   try {
     // return res.status(200).json({ isSuccessful: true, message: "Received" });
     console.log("req.body createPostController11111:", req.body);
+    console.log("req.body.image createPostController11111:", req.body.image);
     console.count("HANGING");
 
     console.log("req.file createPostController11111:", req.file);
@@ -17,7 +17,17 @@ const createPostController: RequestHandler = async (req, res) => {
       `INSERT INTO posts (image) VALUES ($1) RETURNING *`,
       [req?.file?.buffer]
     );
-    console.log("imageRows:", imageRows);
+    // const { rows: imageRows } = await database.query(
+    //   `INSERT INTO posts (image) VALUES ($1) RETURNING *`,
+    //   [req?.body?.image]
+    // );
+    // console.log("req.body.binaryString:", req.body?.binaryString);
+    // const imageBuffer = Buffer.from(req.body.binaryString, "binary");
+    // const { rows: imageRows } = await database.query(
+    //   `INSERT INTO posts (image) VALUES ($1) RETURNING *`,
+    //   [imageBuffer]
+    // );
+    console.log("imageRows createPostController:", imageRows);
     res.end("done");
   } catch (err) {
     if (err instanceof Error) {
