@@ -32,7 +32,7 @@ CREATE TABLE posts (
   post_created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   user_id UUID,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-)
+);
 
 -- CREATE TABLE comments ()
 
@@ -46,6 +46,23 @@ INSERT INTO refresh_tokens (user_id, refresh_token) VALUES ('change-this-into-re
 -- DELETE FROM posts WHERE id >= 3 AND id <= 5; -- Deleting ROWS by selecting ranges.
 DELETE FROM posts WHERE id IN (1, 3, 5) -- Deleting a specific ROWS by id's; 
 -- -- IN opprator to specify multiple values in a WHERE clause; without having to use multi-OR's.
+
+-- CREATE VIEW for easy-access
+CREATE VIEW posts_view_except_post_image AS
+SELECT post_id, post_title, post_description, post_contact_number, post_asking_price,
+post_asking_price_currency, post_created_at FROM posts; -- Creates VIEW my_view
+
+SELECT viewname
+FROM pg_catalog.pg_views
+WHERE schemaname = 'public'; -- Selects ALL VIEWS (prints their names)
+
+-- See which columns a VIEW selects:
+SELECT definition
+FROM pg_catalog.pg_views
+WHERE schemaname = 'public' AND viewname = 'posts_view_except_post_image'; 
+
+DROP VIEW my_view; -- Deletes VIEW
+
 
 -- NOTES
 -- post_contacT_nubmer NUMERIC(10,0) NOT NULL, -- was my intention 
