@@ -32,14 +32,8 @@ const createPostController: RequestHandler = async (
     // //   [imageBuffer]
     // // );
 
-    const {
-      post_title,
-      post_image,
-      post_description,
-      post_contact_number,
-      post_asking_price,
-      post_asking_price_currency,
-    } = req.body;
+    const { title, image, description, contactNumber, askingPrice, currency } =
+      req.body;
 
     const { rows: postsRows } = await database.query(
       `INSERT INTO posts (post_title, post_image, post_description, 
@@ -47,12 +41,12 @@ const createPostController: RequestHandler = async (
         post_asking_price_currency, user_id)
          VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [
-        post_title,
-        post_image,
-        post_description,
-        post_contact_number,
-        post_asking_price,
-        post_asking_price_currency,
+        title,
+        image,
+        description,
+        contactNumber,
+        askingPrice,
+        currency,
         req.user_id, // Comes from authorizeJWT middleware
       ]
     );
