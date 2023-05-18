@@ -10,7 +10,7 @@ const createPostController: RequestHandler = async (
     console.log("req.body createPostController:", req.body);
     console.log("req.file createPostController:", req?.file);
 
-    const { title, image, description, contactNumber, askingPrice, currency } =
+    const { title, description, contactNumber, askingPrice, currency } =
       req.body;
 
     const { rows: postsRows } = await database.query(
@@ -20,7 +20,7 @@ const createPostController: RequestHandler = async (
          VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [
         title,
-        image,
+        req.file?.buffer, //Multer.File object populated by single() middleware.
         description,
         contactNumber,
         askingPrice,
@@ -28,7 +28,8 @@ const createPostController: RequestHandler = async (
         req.user_id, // Comes from authorizeJWT middleware
       ]
     );
-    console.log("postsRows createPostController:", postsRows);
+    // console.log("postsRows createPostController:", postsRows);
+    // (postsRows .QUERY returns nothing)
     return res
       .status(200)
       .json({ isSuccessful: true, message: "Post has been created" });
