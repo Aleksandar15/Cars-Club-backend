@@ -49,7 +49,7 @@ DELETE FROM posts WHERE id IN (1, 3, 5) -- Deleting a specific ROWS by id's;
 
 -- CREATE VIEW for easy-access
 CREATE VIEW posts_view_except_post_image AS
-SELECT post_id, post_title, post_description, post_contact_number, post_asking_price,
+SELECT post_id, post_title, post_description, post_contact_number, post_asking_price, user_id,
 post_asking_price_currency, post_created_at FROM posts; -- Creates VIEW my_view
 
 SELECT viewname
