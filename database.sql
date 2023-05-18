@@ -24,7 +24,7 @@ CREATE TABLE posts (
   post_id uuid DEFAULT uuid_generate_v4(),
   PRIMARY KEY (post_id),
   post_title VARCHAR(50) NOT NULL,
-  post_image BYTEA NOT NULL,
+  post_image_buffer BYTEA NOT NULL,
   post_description VARCHAR(1000) NOT NULL,
   post_contact_number VARCHAR(20) CHECK (post_contact_number ~ '^\d{1,20}$') NOT NULL,
   post_asking_price VARCHAR(20) CHECK (post_asking_price ~ '^\d{1,20}$') NOT NULL,
@@ -62,6 +62,9 @@ FROM pg_catalog.pg_views
 WHERE schemaname = 'public' AND viewname = 'posts_view_except_post_image'; 
 
 DROP VIEW my_view; -- Deletes VIEW
+
+-- RENAME column post_image to post_image_buffer
+ALTER TABLE posts RENAME COLUMN post_image TO post_image_buffer;
 
 
 -- NOTES
