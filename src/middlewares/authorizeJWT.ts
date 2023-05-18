@@ -3,7 +3,7 @@ import JWT from "jsonwebtoken";
 import { DecodedObject } from "../utils/jwtGenerators";
 
 // Must use this modified interface so that I can initialize req.user_id below
-interface CustomReqProperty extends Request {
+export interface CustomReqProperty extends Request {
   user_id?: string;
   user_role?: string;
 }

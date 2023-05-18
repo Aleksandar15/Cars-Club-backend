@@ -1,7 +1,11 @@
 import { RequestHandler } from "express";
 import database from "../../database";
+import { CustomReqProperty } from "../../middlewares/authorizeJWT";
 
-const createPostController: RequestHandler = async (req, res) => {
+const createPostController: RequestHandler = async (
+  req: CustomReqProperty,
+  res
+) => {
   try {
     // return res.status(200).json({ isSuccessful: true, message: "Received" });
     console.log("req.body createPostController11111:", req.body);
@@ -40,8 +44,8 @@ const createPostController: RequestHandler = async (req, res) => {
     const { rows: postsRows } = await database.query(
       `INSERT INTO posts (post_title, post_image, post_description, 
         post_contact_number, post_asking_price, 
-        post_asking_price_currency)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
+        post_asking_price_currency, user_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [
         post_title,
         post_image,
@@ -49,6 +53,7 @@ const createPostController: RequestHandler = async (req, res) => {
         post_contact_number,
         post_asking_price,
         post_asking_price_currency,
+        req.user_id, // Comes from authorizeJWT middleware
       ]
     );
     console.log("postsRows createPostController:", postsRows);
