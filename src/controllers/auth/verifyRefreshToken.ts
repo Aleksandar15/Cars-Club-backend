@@ -6,7 +6,7 @@ const verifyRefreshToken: RequestHandler = async (req, res) => {
   try {
     const cookies = req.cookies;
     const refreshToken: string = cookies?.refreshToken as string;
-    console.log("refreshToken:", refreshToken);
+    console.log("cookies verifyRefreshToken:", cookies);
 
     // Check if refreshToken cookie exists
     if (!refreshToken) {

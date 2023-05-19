@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import corsOptions from "./config/corsOptions";
 import cookiePaser from "cookie-parser";
+import postRoutes from "./routes/postRoutes";
 
 // Call dotenv.config() once
 // to make it available across all files
@@ -25,6 +26,12 @@ app.use(cookiePaser());
 const PORT: number = Number(process.env.PORT ?? 3000);
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/post", postRoutes);
+
+// Cron job
+app.get(`/`, (_, res) => {
+  res.status(200).send("Calling '/' Cron Job Suceeded");
+});
 
 app.listen(PORT, (): void => {
   console.log(`Connected successfully on PORT:${PORT}`);
