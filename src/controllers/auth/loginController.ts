@@ -49,11 +49,13 @@ const loginController = async (req: Request, res: Response) => {
     const accessToken: string = jwtGenerator(
       foundUserByEmail.rows[0].user_id,
       foundUserByEmail.rows[0].user_role,
+      foundUserByEmail.rows[0].user_name,
       "15s"
     );
     const newRefreshToken: string = jwtRefreshGenerator(
       foundUserByEmail.rows[0].user_id,
       foundUserByEmail.rows[0].user_role,
+      foundUserByEmail.rows[0].user_name,
       expiresIn
     );
 
