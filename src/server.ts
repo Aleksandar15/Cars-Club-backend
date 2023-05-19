@@ -28,6 +28,11 @@ const PORT: number = Number(process.env.PORT ?? 3000);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/post", postRoutes);
 
+// Cron job
+app.get(`/`, (_, res) => {
+  res.status(200).send("Calling '/' Cron Job Suceeded");
+});
+
 app.listen(PORT, (): void => {
   console.log(`Connected successfully on PORT:${PORT}`);
 });
