@@ -124,7 +124,6 @@ const refreshTokenController = async (req: Request, res: Response) => {
         const accessToken = jwtGenerator(
           (decoded as DecodedObject).user_id,
           (decoded as DecodedObject).user_role,
-          (decoded as DecodedObject).user_name,
           "15s"
         );
 
@@ -142,7 +141,6 @@ const refreshTokenController = async (req: Request, res: Response) => {
         const newRefreshToken: string = jwtRefreshGenerator(
           (decoded as DecodedObject).user_id,
           (decoded as DecodedObject).user_role,
-          (decoded as DecodedObject).user_name,
           newRTexpiryTimeSeconds
         );
 

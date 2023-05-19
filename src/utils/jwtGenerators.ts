@@ -3,19 +3,16 @@ import jwt, { Secret } from "jsonwebtoken";
 export interface PayloadObject {
   user_id: string;
   user_role: string;
-  user_name: string;
 }
 
 export const jwtGenerator = (
   user_id: string,
   user_role: string,
-  user_name: string,
   expiresIn: string | number
 ): string => {
   const payload: PayloadObject = {
     user_id,
     user_role,
-    user_name,
   };
 
   // // Validate the expiryTime parameter
@@ -46,13 +43,11 @@ export const jwtGenerator = (
 export const jwtRefreshGenerator = (
   user_id: string,
   user_role: string,
-  user_name: string,
   expiresIn: string | number
 ) => {
   const payload: PayloadObject = {
     user_id,
     user_role,
-    user_name,
   };
 
   const jwtRefreshSecret: Secret | undefined = process.env.REFRESH_TOKEN_SECRET;
@@ -66,7 +61,6 @@ export const jwtRefreshGenerator = (
 export interface DecodedObject {
   user_id: string;
   user_role: string;
-  user_name: string;
   iat: number;
   exp: number;
 }
