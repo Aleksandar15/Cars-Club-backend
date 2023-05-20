@@ -31,7 +31,9 @@ CREATE TABLE posts (
   post_asking_price_currency VARCHAR(5) NOT NULL,
   post_created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   user_id UUID,
-  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  post_created_by_user_name VARCHAR(30) NOT NULL,
+  post_created_by_user_email VARCHAR(50) NOT NULL,
 );
 
 -- CREATE TABLE comments ()
@@ -42,10 +44,12 @@ INSERT INTO users (user_name, user_email, user_password) VALUES ('test', 'test@t
 -- Create test refresh_token:
 INSERT INTO refresh_tokens (user_id, refresh_token) VALUES ('change-this-into-real-uuid', 'abc123');
 
+
 -- REMINDERS to-be/can-be used
 -- DELETE FROM posts WHERE id >= 3 AND id <= 5; -- Deleting ROWS by selecting ranges.
 DELETE FROM posts WHERE id IN (1, 3, 5) -- Deleting a specific ROWS by id's; 
 -- -- IN opprator to specify multiple values in a WHERE clause; without having to use multi-OR's.
+
 
 -- CREATE VIEW for easy-access
 CREATE VIEW posts_view_except_post_image AS
@@ -63,8 +67,22 @@ WHERE schemaname = 'public' AND viewname = 'posts_view_except_post_image';
 
 DROP VIEW my_view; -- Deletes VIEW
 
+
 -- RENAME column post_image to post_image_buffer
 ALTER TABLE posts RENAME COLUMN post_image TO post_image_buffer;
+
+
+-- Add columns user_name & user_email. 
+-- 1. BUT I decided not to use 
+-- FOREIGN KEY on them because I may also need ON DELETE CASCADE
+-- and multiple ON DELETE CASCADE`s may get complicated to delete a user(?)
+-- 2. "user_email" must be UNIQUE in "users" table but it will crash 
+-- my "posts" table that has MANY TO ONE relationship & "user_email"`s must repeat.
+ALTER TABLE posts
+ADD COLUMN post_created_by_user_name VARCHAR(30) REFERENCES users(user_name), -- without REFERENCES
+ADD COLUMN post_created_by_user_email VARCHAR(50) REFERENCES users(user_email); -- withotu REFERENCES
+
+
 
 
 -- NOTES
