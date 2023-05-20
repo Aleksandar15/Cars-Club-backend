@@ -52,6 +52,13 @@ DELETE FROM posts WHERE id IN (1, 3, 5) -- Deleting a specific ROWS by id's;
 -- -- IN opprator to specify multiple values in a WHERE clause; without having to use multi-OR's.
 
 
+-- SELECT amount of totalPosts for Frontend's paginations:
+SELECT COUNT(*) AS total_posts FROM posts;
+-- COUNT() command only counts the number of rows that match 
+-- the specified conditions without retrieving the actual data.
+-- Thus it's much faster than a SELECT * which retrieves the data.
+
+
 -- CREATE VIEW for easy-access
 CREATE VIEW posts_view_except_post_image AS
 SELECT post_id, post_title, post_description, post_contact_number, post_asking_price, user_id,
