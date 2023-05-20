@@ -83,6 +83,30 @@ ADD COLUMN post_created_by_user_name VARCHAR(30) REFERENCES users(user_name), --
 ADD COLUMN post_created_by_user_email VARCHAR(50) REFERENCES users(user_email); -- withotu REFERENCES
 
 
+-- ERROR:  column "post_created_by_user_name" contains null values
+ALTER TABLE posts 
+ADD COLUMN post_created_by_user_name VARCHAR(30) NOT NULL, 
+ADD COLUMN post_created_by_user_email VARCHAR(50) NOT NULL;
+-- THE FIX:
+-- -- Allow null values temporarily
+-- ALTER TABLE posts ALTER COLUMN post_created_by_user_name DROP NOT NULL; -- If such COLUMNs exists
+-- ALTER TABLE posts ALTER COLUMN post_created_by_user_email DROP NOT NULL; -- If such COLUMNs exists
+
+-- Add the columns
+ALTER TABLE posts ADD COLUMN post_created_by_user_name VARCHAR(30),
+                 ADD COLUMN post_created_by_user_email VARCHAR(50);
+
+-- Update the values
+UPDATE posts
+SET post_created_by_user_name = '',
+    post_created_by_user_email = ''
+WHERE post_created_by_user_name IS NULL OR post_created_by_user_email IS NULL;
+
+-- Add the "NOT NULL" constraint
+ALTER TABLE posts ALTER COLUMN post_created_by_user_name SET NOT NULL;
+ALTER TABLE posts ALTER COLUMN post_created_by_user_email SET NOT NULL;
+
+
 
 
 -- NOTES
