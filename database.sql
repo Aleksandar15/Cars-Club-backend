@@ -34,6 +34,7 @@ CREATE TABLE posts (
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   post_created_by_user_name VARCHAR(30) NOT NULL,
   post_created_by_user_email VARCHAR(50) NOT NULL,
+  post_created_by_user_role VARCHAR(55) NOT NULL, -- it'll come from JWT TOKEN so it'll never be NULL
 );
 
 -- CREATE TABLE comments ()
@@ -116,3 +117,7 @@ ALTER TABLE posts ALTER COLUMN post_created_by_user_email SET NOT NULL;
 -- -- ^ I must use it this way because "Create Post" button from Frontend sends FormData
 -- -- and FormData's value can ONLY be: string | Blob; hence why such a checking is needed
 -- -- the "~" operator is pattern matching against the RegEx: 1 to 20 max digits.
+-- 2.
+-- "post_created_by_user_role" column added to POSTS as to NOT allow posts 
+-- by higher/highest ranks to get removed by users of lower ROLEs (& with "delete" power.)
+-- like "super-admin" User won't get its post deleted by "admin" or "moderator" User.
