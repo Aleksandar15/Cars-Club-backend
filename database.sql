@@ -34,7 +34,7 @@ CREATE TABLE posts (
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   post_created_by_user_name VARCHAR(30) NOT NULL,
   post_created_by_user_email VARCHAR(50) NOT NULL,
-  post_created_by_user_role VARCHAR(55) NOT NULL, -- it'll come from JWT TOKEN so it'll never be NULL
+  post_created_by_user_role VARCHAR(55) NOT NULL -- it'll come from JWT TOKEN so it'll never be NULL
 );
 
 -- CREATE TABLE comments ()
