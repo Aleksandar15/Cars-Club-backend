@@ -68,6 +68,13 @@ WHERE schemaname = 'public' AND viewname = 'posts_view_except_post_image';
 
 DROP VIEW my_view; -- Deletes VIEW
 
+-- & Encountered an issue trying to DROP posts while I have VIEWs relating to it;
+-- FIX#1:
+DROP TABLE posts CASCADE;
+-- FIX#2:
+DROP VIEW posts_view_except_post_image; DROP TABLE posts;
+
+
 
 -- RENAME column post_image to post_image_buffer
 ALTER TABLE posts RENAME COLUMN post_image TO post_image_buffer;
