@@ -18,7 +18,9 @@ const loginController = async (req: Request, res: Response) => {
 
     // Find user by email in the Database
     const foundUserByEmail = await database.query(
-      `SELECT user_email, user_role, user_password, user_id
+      // `SELECT user_email, user_role, user_password, user_id
+      //  FROM users WHERE user_email = $1`,
+      `SELECT *
        FROM users WHERE user_email = $1`,
       [email]
     );
@@ -141,7 +143,13 @@ const loginController = async (req: Request, res: Response) => {
     });
 
     // Finally send accessToken to the user's React's Redux Toolkit state
-    res.status(200).json({ accessToken });
+    // Update: also send the user_name and user_role and user_id for Posts
+    res.status(200).json({
+      accessToken,
+      user_name: foundUserByEmail?.rows[0]?.user_name,
+      user_email: foundUserByEmail?.rows[0]?.user_email,
+      user_id: foundUserByEmail?.rows[0]?.user_id,
+    });
   } catch (err) {
     if (err instanceof Error) {
       console.log("err.message loginController:", err.message);
