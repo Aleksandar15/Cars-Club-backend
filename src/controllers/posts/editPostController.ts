@@ -57,6 +57,14 @@ const editPostController: RequestHandler = async (
       }
     }
 
+    // Don't-trust-the-Frontend RELATIONSHIP
+    if (isEmpty) {
+      return res.status(400).json({
+        isSuccessful: false,
+        message: "Error - field values can not be empty.",
+      });
+    }
+
     // Extra security 'req.user_id' coming from authorizeJWT
     if (req.user_id === req.params.user_id) {
       // Case: User doesn't wanna update the image, ONLY the rest.
