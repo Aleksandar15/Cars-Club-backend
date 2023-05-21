@@ -13,12 +13,14 @@ router.post(
   multerMiddleware,
   createPostController
 );
-// For POSTMAN's lack of sending Authorization's accessToken:
-// router.post("/createpost", multerMiddleware, createPostController);
-
-router.get(`/getimagebyid/:id`, getImageByIdController);
+// For POSTMAN's lack of (interceptors) sending Authorization's accessToken:
+// router.post("/createpost", multerMiddleware, createPostController); // POSTMAN
 
 // router.get(`/getallposts`, getAllPostsController); // POSTMAN tests
 router.get(`/getallposts`, authorizeJWT, getAllPostsController);
+
+// Below was used only for testing images Buffer into SRC value React.
+// router.get(`/getimagebyid/:id`, getImageByIdController); // POSTMAN
+router.get(`/getimagebyid/:id`, authorizeJWT, getImageByIdController);
 
 export default router;
