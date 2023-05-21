@@ -18,6 +18,7 @@ router.post(
 
 router.get(`/getimagebyid/:id`, getImageByIdController);
 
-router.get(`/getallposts`, getAllPostsController);
+// router.get(`/getallposts`, getAllPostsController); // POSTMAN tests
+router.get(`/getallposts`, authorizeJWT, getAllPostsController);
 
 export default router;
