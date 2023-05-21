@@ -30,11 +30,13 @@ const createPostController: RequestHandler = async (
     let isEmpty = false;
     for (const property in req.body) {
       if (
-        req.body.hasOwnProperty(property) &&
-        // ^ that must be TRUE AND (&&) also:
-        (req.body[property] === undefined ||
-          req.body[property] === "" ||
-          req.body[property] === null)
+        // req.body.hasOwnProperty(property) &&
+        // // ^ that must be TRUE AND (&&)
+        // // UPDATE: .hasOwnProperty "is not a function" in Node
+        // instead ONLY:
+        req.body[property] === undefined ||
+        req.body[property] === "" ||
+        req.body[property] === null
       ) {
         // if they're empty "" or UNDEFINED/NULL, set isEmpty=true;
         isEmpty = true;
