@@ -78,6 +78,11 @@ const createPostController: RequestHandler = async (
         req.user_role, // also from JWT TOKEN
       ]
     );
+    // NOTE that error where req.user_id DOESN'T match any user_id from
+    // the USERS table -> CATCH catches an error:
+    // "err.message createPostController: insert or update on table
+    // "posts" violates foreign key constraint "posts_user_id_fkey"".
+
     // console.log("postsRows createPostController:", postsRows);
     // (postsRows .QUERY returns nothing)
     return res
