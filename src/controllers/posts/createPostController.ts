@@ -20,6 +20,40 @@ const createPostController: RequestHandler = async (
       user_email,
     } = req.body;
 
+    // Fixing issue or rather IMPROVING the
+    // "Don't trust the frontend"-relationships, where this error:
+    // "err.message createPostController: value too long
+    // for type character varying(5)" -> occured on Currency (bug)
+    // being UNDEFINED -> and was confusing BUT true in same time
+    // (UNDEFINED has length higher than 5).
+
+    let isEmpty = false;
+    for (const property in req.body) {
+      if (
+        req.body.hasOwnProperty(property) &&
+        // ^ that must be TRUE AND (&&) also:
+        (req.body[property] === undefined ||
+          req.body[property] === "" ||
+          req.body[property] === null)
+      ) {
+        // if they're empty "" or UNDEFINED/NULL, set isEmpty=true;
+        isEmpty = true;
+        break;
+      }
+    }
+    // // Alternative one-liner
+    // const isEmpty = Object.values(req.body).some(
+    //   (value) => value === "" || value === undefined
+    // );
+
+    if (isEmpty) {
+      res.status(400).json({
+        isSuccessful: false,
+        message:
+          "Error - properties can not be empty string or null or undefined.",
+      });
+    }
+
     const { rows: postsRows } = await database.query(
       `INSERT INTO posts (post_title, post_image_buffer, 
         post_description, post_contact_number, 
