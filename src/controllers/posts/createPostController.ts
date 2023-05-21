@@ -49,7 +49,7 @@ const createPostController: RequestHandler = async (
     // );
 
     if (isEmpty) {
-      res.status(400).json({
+      return res.status(400).json({
         isSuccessful: false,
         message:
           "Error - properties can not be empty string or null or undefined.",
