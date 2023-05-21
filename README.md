@@ -88,3 +88,4 @@
    - For `post_created_by_email` I might even implement a conditional checking in `ModalPost.tsx` (& "edits Posts") to make User decide whether to show "contact number" or "contact e-mail" or both. A toggler.
 2. Have a comments section which `comments` table that will relate with each `post` Row of the `posts` table and `FOREIGN KEY` "user_id" column to `REFERENCE` `users` table.
 3. Have a replies sections: such `replies` table will have to connect with "comment_id" from `comments` table & the "user_id" from `users` table.
+4. On the Frontend part of UI/UX I may implement some alert/modal that will be shown on successful EDITs of the POST.
