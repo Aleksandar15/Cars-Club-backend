@@ -5,6 +5,7 @@ import getAllPostsController from "../controllers/posts/getAllPostsController";
 import getImageByIdController from "../controllers/posts/getImageByIdController";
 import authorizeJWT from "../middlewares/authorizeJWT";
 import multerMiddleware from "../middlewares/multerMiddleware";
+import editPostController from "../controllers/posts/editPostController";
 
 const router = Router();
 
@@ -18,6 +19,13 @@ router.post(
 // router.post("/createpost", multerMiddleware, createPostController); // POSTMAN
 
 router.get(`/getonepost/:post_id/:user_id`, authorizeJWT, getOnePostController);
+
+router.put(
+  `/editpost/:post_id/:user_id`,
+  authorizeJWT,
+  multerMiddleware,
+  editPostController
+);
 
 // router.get(`/getallposts`, getAllPostsController); // POSTMAN tests
 router.get(`/getallposts`, authorizeJWT, getAllPostsController);
