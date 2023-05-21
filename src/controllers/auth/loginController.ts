@@ -149,6 +149,7 @@ const loginController = async (req: Request, res: Response) => {
       user_name: foundUserByEmail?.rows[0]?.user_name,
       user_email: foundUserByEmail?.rows[0]?.user_email,
       user_id: foundUserByEmail?.rows[0]?.user_id,
+      user_role: foundUserByEmail?.rows[0]?.user_role,
     });
   } catch (err) {
     if (err instanceof Error) {

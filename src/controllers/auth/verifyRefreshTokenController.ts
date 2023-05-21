@@ -8,7 +8,6 @@ const verifyRefreshTokenController: RequestHandler = async (req, res) => {
     const cookies = req.cookies;
     const refreshToken: string = cookies?.refreshToken as string;
     console.log("cookies verifyRefreshTokenController:", cookies);
-    console.log("req.body verifyRefreshTokenController:", req.body);
     // console.log("req.user_email verifyRefreshTokenController:", req.user_email);
 
     // Check if refreshToken cookie exists
@@ -36,11 +35,10 @@ const verifyRefreshTokenController: RequestHandler = async (req, res) => {
 
         const { rows: userInfo } = await database.query(
           `
-        SELECT user_name user_email FROM users WHERE user_id=$1
+        SELECT user_name, user_email FROM users WHERE user_id=$1
         `,
           [decodedTyped?.user_id]
         );
-
         return res.status(200).json({
           isSuccessful: true,
           message: "User is authenticated",
