@@ -36,7 +36,9 @@ router.delete(
 );
 
 router.get(
-  `/getsortedposts/:limit/:offset`,
+  // `/getsortedposts/:limit/:offset`,
+  // // Decided to use query in my Controller, instead.
+  `/getsortedposts`,
   authorizeJWT,
   getSortedPostsController
 );
