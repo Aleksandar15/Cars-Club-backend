@@ -7,6 +7,7 @@ import authorizeJWT from "../middlewares/authorizeJWT";
 import multerMiddleware from "../middlewares/multerMiddleware";
 import editPostController from "../controllers/posts/editPostController";
 import deletePostController from "../controllers/posts/deletePostController";
+import getSortedPostsController from "../controllers/posts/getSortedPostsController";
 
 const router = Router();
 
@@ -32,6 +33,12 @@ router.delete(
   `/deletepost/:post_id/:user_id`,
   authorizeJWT,
   deletePostController
+);
+
+router.get(
+  `/getsortedposts/:limit/:offset`,
+  authorizeJWT,
+  getSortedPostsController
 );
 
 // router.get(`/getallposts`, getAllPostsController); // POSTMAN tests
