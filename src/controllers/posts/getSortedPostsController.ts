@@ -14,27 +14,27 @@ const getSortedPostsController: RequestHandler<{
     // console.log("gotThreePostsROWS getSortedPostsController:", gotThreePostsROWS);
     // return res.status(200).json({ gotThreePostsROWS });
 
-    console.log(
-      "getSortedPosts req.params:\nreq.params.limit:",
-      req.params.limit,
-      "& req.params.offset:",
-      req.params.offset
-    );
+    // console.log(
+    //   "getSortedPosts req.params:\nreq.params.limit:",
+    //   req.params.limit,
+    //   "& req.params.offset:",
+    //   req.params.offset
+    // ); // Stopped using params & instead querys below:
 
     console.log(
       "getSortedPosts req.query:\nreq.query.limit:",
       req.query.limit,
       "& req.query.offset:",
       req.query.offset,
-      "& req.query.carTitleName:",
-      req.query.carTitleName
+      "& req.query.carNameTitle:",
+      req.query.carNameTitle
     );
 
-    const { limit, offset, carTitleName } = req.query;
+    const { limit, offset, carNameTitle } = req.query;
     const limitToNumber = typeof limit === "string" ? parseInt(limit, 10) : 0;
     const offsetToNumber =
       typeof offset === "string" ? parseInt(offset, 10) : 0;
-    const carTitleNameString = carTitleName?.toString();
+    const carNameTitleString = carNameTitle?.toString();
 
     // NOTICE
     // I must be converting the incoming string into number
@@ -63,7 +63,7 @@ const getSortedPostsController: RequestHandler<{
     // DESC LIMIT $2 OFFSET $3`.
     // -> must use parseInt(queryName, 10) for LIMIT & OFFSET.
 
-    if (carTitleNameString?.length === 0 || carTitleNameString === undefined) {
+    if (carNameTitleString?.length === 0 || carNameTitleString === undefined) {
       // First task get the length of all Posts without
       // retrieving all the data: COUNT(*) is very fast
       const { rows: totalPostsROWS } = await database.query(
@@ -71,7 +71,7 @@ const getSortedPostsController: RequestHandler<{
         SELECT COUNT(*) AS total_posts FROM posts
         `
       );
-      const { total_posts } = totalPostsROWS[0];
+      const total_posts = totalPostsROWS[0].total_posts;
       console.log("total_posts getSortedPosts:", total_posts);
 
       const { rows: retrievedSortedDataROWS } = await database.query(
