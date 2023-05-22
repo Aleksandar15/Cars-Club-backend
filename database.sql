@@ -65,6 +65,9 @@ RETURNING *; -- PG-library example. Exchange valuess for real values
 --   req.params.user_id,
 -- ]
 
+-- DELETE A POST
+DELETE FROM posts WHERE post_id='123' AND user_id='456' RETURNING *;
+
 
 -- REMINDERS to-be/can-be used
 -- DELETE FROM posts WHERE id >= 3 AND id <= 5; -- Deleting ROWS by selecting ranges.
