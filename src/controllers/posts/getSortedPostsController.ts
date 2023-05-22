@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import database from "../../database";
 
 const getSortedPostsController: RequestHandler<{
-  limit: string;
+  limit: string; // Params no longer needed->switched to Query's.
   offset: string;
 }> = async (req, res) => {
   try {
@@ -20,6 +20,21 @@ const getSortedPostsController: RequestHandler<{
       "& req.params.offset:",
       req.params.offset
     );
+
+    console.log(
+      "getSortedPosts req.query:\nreq.query.limit:",
+      req.query.limit,
+      "& req.query.offset:",
+      req.query.offset,
+      "& req.query.carTitleName:",
+      req.query.carTitleName
+    );
+
+    const { limit, offset, carTitleName } = req.query;
+    const limitToNumber = typeof limit === "string" ? parseInt(limit, 10) : 0;
+    const offsetToNumber =
+      typeof offset === "string" ? parseInt(offset, 10) : 0;
+    const carTitleNameString = carTitleName?.toString();
 
     // NOTICE
     // I must be converting the incoming string into number
@@ -48,22 +63,34 @@ const getSortedPostsController: RequestHandler<{
     // DESC LIMIT $2 OFFSET $3`.
     // -> must use parseInt(queryName, 10) for LIMIT & OFFSET.
 
-    // First task get the length of all Posts without
-    // retrieving all the data: COUNT(*) is very fast
-    const { rows } = await database.query(
-      `SELECT COUNT(*) AS total_posts FROM posts
-    `
-    );
-    const { total_posts } = rows[0];
-    console.log("total_posts getSortedPosts:", total_posts);
-    return res.json({ total_posts });
+    if (carTitleNameString?.length === 0 || carTitleNameString === undefined) {
+      // First task get the length of all Posts without
+      // retrieving all the data: COUNT(*) is very fast
+      const { rows: totalPostsROWS } = await database.query(
+        `
+        SELECT COUNT(*) AS total_posts FROM posts
+        `
+      );
+      const { total_posts } = totalPostsROWS[0];
+      console.log("total_posts getSortedPosts:", total_posts);
 
-    const { rows: gotAllPostsROWS } = await database.query(
-      `
-    SELECT * FROM posts ORDER BY post_created_at DESC`
-    );
-    // console.log("gotAllPostsROWS getSortedPostsController:", gotAllPostsROWS);
-    return res.status(200).json({ gotAllPostsROWS });
+      const { rows: retrievedSortedDataROWS } = await database.query(
+        `
+        SELECT * FROM posts
+        ORDER BY post_created_at DESC
+        LIMIT $1 OFFSET $2
+        `,
+        [limitToNumber, offsetToNumber]
+      );
+      console.log(
+        "retrievedSortedDataROWS getSortedPosts:",
+        retrievedSortedDataROWS
+      );
+      const posts = retrievedSortedDataROWS[0];
+      return res.json({ total_posts, posts }).status(200);
+    }
+
+    return res.send("failed to get sorted posts");
   } catch (err) {
     console.log("getSortedPostsController ERR:", err);
   }
