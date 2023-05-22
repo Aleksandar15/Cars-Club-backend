@@ -45,6 +45,29 @@ INSERT INTO users (user_name, user_email, user_password) VALUES ('test', 'test@t
 -- Create test refresh_token:
 INSERT INTO refresh_tokens (user_id, refresh_token) VALUES ('change-this-into-real-uuid', 'abc123');
 
+-- Edit POST
+UPDATE posts SET
+post_title=$1, post_description=$2,
+post_contact_number=$3,
+post_asking_price=$4,
+post_asking_price_currency=$5,
+post_image_buffer=$6
+WHERE post_id=$7 AND user_id=$8
+RETURNING *; -- PG-library example. Exchange valuess for real values
+-- [
+--   req.body.title,
+--   req.body.description,
+--   req.body.contactNumber,
+--   req.body.askingPrice,
+--   req.body.currency,
+--   req.file?.buffer, // Coming from multerMiddleware
+--   req.params.post_id,
+--   req.params.user_id,
+-- ]
+
+-- DELETE A POST
+DELETE FROM posts WHERE post_id='123' AND user_id='456' RETURNING *;
+
 
 -- REMINDERS to-be/can-be used
 -- DELETE FROM posts WHERE id >= 3 AND id <= 5; -- Deleting ROWS by selecting ranges.
