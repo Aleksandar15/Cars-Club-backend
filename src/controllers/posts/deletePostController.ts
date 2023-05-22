@@ -7,8 +7,7 @@ const deletePostController: RequestHandler = async (
   res
 ) => {
   try {
-    console.log("req.body deletePostController:", req.body);
-    console.log("req.file deletePostController:", req?.file);
+    console.log("req.params deletePostController:", req.params);
 
     // NOTE I don't need to check if req.params.user_id
     // matches against req.user_id by AuthorizeJWT
@@ -31,6 +30,8 @@ const deletePostController: RequestHandler = async (
       [req.params.post_id, req.params.user_id]
     );
 
+    console.log("deletedPostRows deletePostController:", deletedPostRows);
+
     // Post not found -> 'Already deleted'
     if (deletedPostRows.length === 0) {
       return res.status(400).json({
@@ -38,8 +39,6 @@ const deletePostController: RequestHandler = async (
         message: "Post has already been deleted",
       });
     }
-
-    console.log("deletedPostRows deletePostController:", deletedPostRows);
 
     return res
       .status(200)

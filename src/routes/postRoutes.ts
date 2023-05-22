@@ -29,7 +29,7 @@ router.put(
 );
 
 router.delete(
-  `/deletepost/:post_id/:used_id`,
+  `/deletepost/:post_id/:user_id`,
   authorizeJWT,
   deletePostController
 );
