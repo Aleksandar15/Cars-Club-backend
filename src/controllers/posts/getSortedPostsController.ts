@@ -86,7 +86,8 @@ const getSortedPostsController: RequestHandler<{
         "retrievedSortedDataROWS getSortedPosts:",
         retrievedSortedDataROWS
       );
-      const posts = retrievedSortedDataROWS[0];
+      // const posts = retrievedSortedDataROWS[0];
+      const posts = retrievedSortedDataROWS;
       return res.json({ total_posts, posts }).status(200);
     }
 
