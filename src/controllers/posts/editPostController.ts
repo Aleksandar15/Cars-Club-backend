@@ -95,10 +95,23 @@ const editPostController: RequestHandler = async (
             message: "Error - failed to edit post",
           });
         }
+        console.log(
+          "edittedPostROWS[0] editPostController:",
+          edittedPostROWS[0]
+        );
+        const edittedPost = edittedPostROWS[0];
         return res.status(200).json({
           isSuccessful: true,
           message: "Post has been editted",
           // Frontend doesn't need the edittedPostROWS.
+          // NEW:
+          // UPDATE: Frontend needs the edittedPostROWS[0]
+          // so on the Frontend I can use Reducer of inside
+          // `getSortedPost` 'POSTS' state will be mutated
+          // based on a matching post_id
+          // upon `200` response inside Frontend's
+          // `ModalPost_Create_or_Edit_Button` component.
+          edittedPost,
         });
       } else {
         // req.file is NOT UNDEFINED
@@ -132,10 +145,23 @@ const editPostController: RequestHandler = async (
             message: "Error - failed to edit post",
           });
         }
+        console.log(
+          "edittedPostROWS[0] editPostController:",
+          edittedPostROWS[0]
+        );
+        const edittedPost = edittedPostROWS[0];
         return res.status(200).json({
           isSuccessful: true,
           message: "Post has been editted",
           // Frontend doesn't need the edittedPostROWS.
+          // NEW:
+          // UPDATE: Frontend needs the edittedPostROWS[0]
+          // so on the Frontend I can use Reducer of inside
+          // `getSortedPost` 'POSTS' state will be mutated
+          // based on a matching post_id
+          // upon `200` response inside Frontend's
+          // `ModalPost_Create_or_Edit_Button` component.
+          edittedPost,
         });
       }
     } else {
