@@ -89,9 +89,41 @@ const getSortedPostsController: RequestHandler<{
       // const posts = retrievedSortedDataROWS[0];
       const posts = retrievedSortedDataROWS;
       return res.json({ total_posts, posts }).status(200);
+      // Possible issue of sending status 200 AFTER
     }
-
-    return res.send("failed to get sorted posts");
+    if (carNameTitleString.length > 0 && carNameTitleString !== "undefined") {
+      const { rows: totalPostsByPostTitleROWS } = await database.query(
+        `
+        SELECT COUNT(*) AS total_posts FROM posts
+        WHERE post_title ILIKE $1
+        `,
+        [`%${carNameTitleString}%`]
+      );
+      console.log(
+        "totalPostsByPostTitleROWS getSortedPostsController:",
+        totalPostsByPostTitleROWS
+      );
+      console.log(
+        "carNameTitleString getSortedPostsController:",
+        carNameTitleString
+      );
+      const total_posts = totalPostsByPostTitleROWS[0].total_posts;
+      const { rows: retrievedSortedDataByPostTitleROWS } = await database.query(
+        `
+        SELECT * FROM posts
+        WHERE post_title ILIKE $1
+        ORDER BY post_created_at DESC
+        LIMIT $2 OFFSET $3
+        `,
+        [`%${carNameTitleString}%`, limitToNumber, offsetToNumber]
+      );
+      const posts = retrievedSortedDataByPostTitleROWS;
+      return res.status(200).json({ total_posts, posts });
+    }
+    return res.status(400).json({
+      isSuccessful: false,
+      message: "Error - failed to get sorted posts",
+    });
   } catch (err) {
     console.log("getSortedPostsController ERR:", err);
   }
