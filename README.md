@@ -81,6 +81,7 @@
    intercepted Axios in the Async Thunk Redux file **BUT** imported from Axios.ts (the **EXACT** 'reference Axios instance object' that's being intercepted in my `useAxiosInterceptor` custom Hook) just to make sure
    my POST/PUT Requests won't fail by using a non-intercepted Axios instance. A lot of workaround indeed. Overall forgetting to call `useAxiosInterceptor` would lead to Async Thunk failing on me and causing bugs to my App.
    - And I also wouldn't be able to call a DISPATCH function in my Redux file to fill my `ModalPost.tsx` input fields with the VALUES matching the `post_id` that the user has clicked on, because `useDispatch` is a Hook that also **can NOT** be called inside Redux files.
+7. I have not added IMAGE Size limits just for easier testing. In a real App I would at least limit the size and even possibly provide a link to my Users of a free service to resize their images or add my own functionality that will resize theirs images either on the Frontend Notice or without their Notice I'd resize them on the backend and store them on the server or database & then frontend will retrieve the resized pictures.
 
 ##### Further plans (_reminders for me_)
 
