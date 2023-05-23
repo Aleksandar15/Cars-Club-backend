@@ -81,6 +81,17 @@ SELECT COUNT(*) AS total_posts FROM posts;
 -- the specified conditions without retrieving the actual data.
 -- Thus it's much faster than a SELECT * which retrieves the data.
 
+-- SELECT amount of totalPosts BUT based on the post_title
+SELECT COUNT(*) AS total_posts FROM posts WHERE post_title ILIKE '%mErcEDeS%'
+-- -> ILIKE operator with the % wildcard to perform a case-insensitive search
+-- -> for any 'post_title' containing the provided value.
+-- ALSO -> for pg-library provide: [`%${post_title}%`]
+-- NOTE however that:
+-- I'll still need to perform x2 actions: 1: to retrieve sorted posts & 2: COUNT(*) by post_title.
+-- To retrieve the data in sorted way:
+SELECT * FROM psots WHERE post_title ILIKE '%bMw%' ORDER BY created_at DESC LIMIT 5 OFFSET 5;
+-- NOTE that inside my controllers I must convert LIMIT & OFFSET into numbers: parseInt(param, 10)
+
 
 -- CREATE VIEW for easy-access
 CREATE VIEW posts_view_except_post_image AS

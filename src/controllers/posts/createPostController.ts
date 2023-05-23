@@ -48,6 +48,11 @@ const createPostController: RequestHandler = async (
     //   (value) => value === "" || value === undefined
     // );
 
+    // Bug fixes: I forgot image comes from req.file so check against it
+    if (req.file === undefined) {
+      isEmpty = true;
+    }
+
     if (isEmpty) {
       return res.status(400).json({
         isSuccessful: false,
