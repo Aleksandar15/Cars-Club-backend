@@ -89,6 +89,7 @@ const getSortedPostsController: RequestHandler<{
       // const posts = retrievedSortedDataROWS[0];
       const posts = retrievedSortedDataROWS;
       return res.json({ total_posts, posts }).status(200);
+      // Possible issue of sending status 200 AFTER
     }
 
     return res.send("failed to get sorted posts");
