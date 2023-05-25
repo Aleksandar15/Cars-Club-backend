@@ -2,7 +2,7 @@
 
 ##### ~> My <a href="https://github.com/Aleksandar15/Cars-Club-frontend">frontend code</a>.
 
-#### Visit my live website here: https://alek-password-manager.netlify.app
+#### Visit my live website here: https://cars-club.netlify.app
 
 ##### Test login user:
 
@@ -16,7 +16,7 @@ Combining my passion for cars I created this fullstack project with one of the m
 
 ---
 
-#### NOTE: I'm still working on this fullstack project - <del>it's not yet</del> finished & my main goal is to improve my TypeScript skills. ✔ **DONE**
+##### Note: I'm still working on this fullstack project - <del>it's not yet</del> finished & my main goal is to improve my TypeScript skills. **UPDATE**: ✔ **DONE**
 
 #### Plans & Features (in non-technical way):
 
