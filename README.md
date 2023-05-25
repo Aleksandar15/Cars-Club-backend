@@ -14,6 +14,12 @@
 
 Combining my passion for cars I created this fullstack project with one of the main goal being that to improve my TypeScript skills. I had focused on setting up a reusable and scalable code that can be used for implementing more features. Now that it's all looking & working smoothly, my app is at a state where I can continue implementing my new ideas in the future updates seamlessly.
 
+#### Technologies used:
+
+##### TypeScript, PostgreSQL Database, ReactJS with Redux Toolkit, NodeJS with ExpressJS and MulterJS
+
+<h3 style="text-align: center;">^^^^^ UPDATE ^^^^^</h3>
+
 ---
 
 ##### Note: I'm still working on this fullstack project - <del>it's not yet</del> finished & my main goal is to improve my TypeScript skills. **UPDATE**: ✔ **DONE**
@@ -25,10 +31,6 @@ Combining my passion for cars I created this fullstack project with one of the m
 - Section for posting cars for sales (allowed by all users): Marketplace.
 - Posts will be connected to the OP user (original poster) & they can update or delete their post.
 - Users not related to a particular post will be able to comment; they will be related to their own comment & be able to update and delete their own comment.
-
-#### Technologies used:
-
-###### Postgres DB, TypeScript, ReactJS with Redux Toolkit, NodeJS with ExpressJS
 
 ### Run my backend project
 
@@ -55,6 +57,10 @@ Combining my passion for cars I created this fullstack project with one of the m
 ##### Sources
 
 - For most of my SVG icons I've used a PNG version of icons8 and then converted that PNG into SVG using sites like https://www.pngtosvg.com.
+
+<h3 style="text-align: center;">NO NEED TO READ BELOW</h3> 😊
+
+---
 
 ##### Extras (_reminders for me_)
 
