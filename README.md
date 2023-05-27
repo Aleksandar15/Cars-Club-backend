@@ -16,9 +16,9 @@ Combining my passion for cars I created this fullstack project with one of the m
 
 #### Technologies used:
 
-##### TypeScript, PostgreSQL Database, ReactJS with Redux Toolkit, NodeJS with ExpressJS and MulterJS
+###### TypeScript + ReactJS with Redux Toolkit + NodeJS with ExpressJS and MulterJS + PostgreSQL Database
 
-<h3 style="text-align: center;">^^^^^ UPDATE ^^^^^</h3>
+<h4 style="text-align: center;">^ UPDATE ^</h4>
 
 ---
 
@@ -26,11 +26,11 @@ Combining my passion for cars I created this fullstack project with one of the m
 
 #### Plans & Features (in non-technical way):
 
-- Login & Register sections.
-- Section for cars info & specifications: Catalog.
-- Section for posting cars for sales (allowed by all users): Marketplace.
-- Posts will be connected to the OP user (original poster) & they can update or delete their post.
-- Users not related to a particular post will be able to comment; they will be related to their own comment & be able to update and delete their own comment.
+- Login & Register sections. ✔
+- Section for cars info & specifications: Catalog. ✔
+- Section for posting cars for sales (allowed by all users): Marketplace. ✔
+- Posts will be connected to the OP user (original poster) & they can update or delete their post. ✔
+- Users not related to a particular post will be able to comment; they will be related to their own comment & be able to update and delete their own comment. 🔃
 
 ### Run my backend project
 
@@ -58,7 +58,7 @@ Combining my passion for cars I created this fullstack project with one of the m
 
 - For most of my SVG icons I've used a PNG version of icons8 and then converted that PNG into SVG using sites like https://www.pngtosvg.com.
 
-<h3 style="text-align: center;">NO NEED TO READ BELOW</h3> 😊
+<h4 style="text-align: center;">NO NEED TO READ BELOW ARE MY REMINDERS 😊</h4>
 
 ---
 
