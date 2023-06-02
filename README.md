@@ -14,6 +14,16 @@
 
 Combining my passion for cars I created this fullstack project with one of the main goal being that to improve my TypeScript skills. I had focused on setting up a reusable and scalable code that can be used for implementing more features. Now that it's all looking & working smoothly, my app is at a state where I can continue implementing my new ideas in the future updates seamlessly.
 
+#### On the frontend
+
+- Users can create a Post with an image, then submit this `multipart/form-data` request with all the input values appended to a `FormData`.
+- I'm converting the backend's image value - a _binary data_ - into a `src` value using a function that first converts it to `Uint8Array` instance, then I'm grabbing the `buffer` property value & passing it as an argument to the `Blob`'s constructor (but passing the whole instance works as well). Finally with `URL.createObjectURL` I'm creating a URL from this Blob that is used as the `src` value.
+
+#### On the backend
+
+- I'm using Multer middleware to process the `FormData` received from a `multipart/form-data` request with the storage option `memoryStorage()`, then using `upload.single` instance middleware to populate `req.file` with metadata about the image. My controller _only_ stores the _binary data_ from the `buffer` property into my PostgreSQL as a `BYTEA` column type.
+- My `refresh_tokens` and `posts` tables both have a MANY-TO-ONE relationship with my `users` table.
+
 #### Technologies used:
 
 ###### TypeScript + ReactJS with Redux Toolkit + NodeJS with ExpressJS and MulterJS + PostgreSQL Database
